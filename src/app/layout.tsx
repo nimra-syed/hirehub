@@ -1,6 +1,7 @@
 import "./globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "HireHub",
@@ -23,20 +24,37 @@ export default function RootLayout({
               <Link className="rounded-md px-3 py-2 hover:bg-white/10" href="/">
                 Home
               </Link>
-              <Link className="rounded-md px-3 py-2 hover:bg-white/10" href="/jobs">
+              <Link
+                className="rounded-md px-3 py-2 hover:bg-white/10"
+                href="/jobs"
+              >
                 Jobs
               </Link>
-              <Link className="rounded-md px-3 py-2 hover:bg-white/10" href="/ai-tools">
+              <Link
+                className="rounded-md px-3 py-2 hover:bg-white/10"
+                href="/ai-tools"
+              >
                 AI Tools
               </Link>
-              <Link className="rounded-md px-3 py-2 hover:bg-white/10" href="/settings">
+              <Link
+                className="rounded-md px-3 py-2 hover:bg-white/10"
+                href="/settings"
+              >
                 Settings
+              </Link>
+              <Link
+                className="rounded-md px-3 py-2 hover:bg-white/10"
+                href="/applications"
+              >
+                Applications
               </Link>
             </nav>
           </aside>
 
           <main className="flex-1 p-10 bg-gray-100">{children}</main>
         </div>
+
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );
