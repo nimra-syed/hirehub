@@ -57,3 +57,5 @@ git clone https://github.com/nimra-syed/hirehub.git
 cd hirehub
 npm install
 npm run dev
+
+Then open: http://localhost:3000
