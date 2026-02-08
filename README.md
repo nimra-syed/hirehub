@@ -40,11 +40,15 @@ This project was also a great opportunity to strengthen my skills in building an
 
 ## Key Features
 
-- Persistent application tracking using local storage  
-- Real-time status updates  
-- Clean, responsive UI  
-- Toast notifications for user actions  
-- Fast production deployment  
+• Create and edit job applications with persistent local storage  
+• Schema-driven form validation using Zod + React Hook Form  
+• Unsaved changes protection to prevent accidental data loss  
+• Reusable UI component architecture for scalable development  
+• Real-time application status tracking  
+• Toast notifications for system feedback  
+• Protected routing patterns for safer navigation flows  
+• Clean, responsive interface built with Tailwind CSS  
+• Fast production deployment via Vercel
 
 ---
 
