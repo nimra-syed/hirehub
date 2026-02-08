@@ -1,6 +1,6 @@
 import { jobs } from "@/lib/jobs";
 import Link from "next/link";
-import ApplyNowButton from "./ApplyNowButton";
+import ApplyNowButton from "@/components/ApplyNowButton";
 
 export function generateStaticParams() {
   return jobs.map((job) => ({ id: job.id }));
