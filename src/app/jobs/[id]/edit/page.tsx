@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -19,20 +19,20 @@ export default function EditJobPage() {
   const params = useParams<{ id: string }>();
   const id = params.id;
 
-  const [job, setJob] = useState<StoredJob | null>(null);
+  // Derive the job directly (no setState in an effect)
+  const job = useMemo(() => getStoredJobById(id), [id]);
 
+  // Side-effect only: if not found, toast + redirect
   useEffect(() => {
-    const found = getStoredJobById(id);
-    if (!found) {
+    if (!job) {
       toast.message("That job can’t be edited (only jobs you created).");
-      router.push("/jobs");
-      return;
+      router.replace("/jobs");
     }
-    setJob(found);
-  }, [id, router]);
+  }, [job, router]);
 
   const defaultValues = useMemo(() => {
     if (!job) return undefined;
+
     return {
       title: job.title,
       company: job.company,
@@ -57,6 +57,7 @@ export default function EditJobPage() {
     router.push("/jobs");
   };
 
+  // While redirecting, render nothing
   if (!job) return null;
 
   return (

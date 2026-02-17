@@ -5,26 +5,37 @@ import { toast } from "sonner";
 
 import JobForm from "@/components/forms/JobForm";
 import type { JobFormValues } from "@/lib/validation";
-import { getStoredJobs, saveStoredJobs, type StoredJob } from "@/lib/storage";
 
 export default function NewJobPage() {
   const router = useRouter();
 
-  const onSubmit = (values: JobFormValues) => {
-    const existing = getStoredJobs();
+  const onSubmit = async (values: JobFormValues) => {
+    try {
+      const res = await fetch("/api/jobs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          company: values.company,
+          role: values.title, // JobForm uses "title" but DB uses "role"
+          status: "Applied", // default for now (we’ll make it selectable later)
+          location: values.location,
+          applyUrl: values.applyUrl || "",
+        }),
+      });
 
-    const newJob: StoredJob = {
-      id: crypto.randomUUID(),
-      title: values.title,
-      company: values.company,
-      location: values.location,
-      applyUrl: values.applyUrl || undefined,
-      createdAt: new Date().toISOString(),
-    };
+      const json = (await res.json()) as { error?: string };
 
-    saveStoredJobs([newJob, ...existing]);
-    toast.success("Job created!");
-    router.push("/jobs");
+      if (!res.ok) {
+        throw new Error(json?.error || "Failed to create job");
+      }
+
+      toast.success("Job created!");
+      router.push("/jobs");
+      router.refresh(); // makes sure /jobs refetches immediately
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Something went wrong";
+      toast.error(message);
+    }
   };
 
   return (
